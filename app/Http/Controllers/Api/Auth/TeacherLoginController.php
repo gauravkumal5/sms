@@ -6,13 +6,13 @@ use Illuminate\Http\Request;
 use JWTAuth;
 
 
-class AdminController extends Controller
+class TeacherLoginController extends Controller
 {
     public function __construct(){
-        auth()->setDefaultDriver('admin');
+        auth()->setDefaultDriver('teacher');
     }
     public function demo(){
-        return "admin demo";
+        return " Teacher demo";
     }
     public function login(Request $request){
 

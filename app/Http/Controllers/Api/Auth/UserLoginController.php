@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use JWTAuth;
 
 
-class UserController extends Controller
+class UserLoginController extends Controller
 {
     public function __construct(){
         auth()->setDefaultDriver('user');

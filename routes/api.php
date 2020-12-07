@@ -18,9 +18,9 @@ use Illuminate\Http\Request;
 // });
 
 
-Route::post('admin/login','Api\Auth\AdminController@login');;
-Route::post('teacher/login','Api\Auth\TeacherController@login');
-Route::post('user/login','Api\Auth\UserController@login');
+Route::post('admin/login','Api\Auth\AdminLoginController@login');;
+Route::post('teacher/login','Api\Auth\TeacherLoginController@login');
+Route::post('user/login','Api\Auth\UserLoginController@login');
 
 
 
@@ -30,8 +30,8 @@ Route::group([
     'prefix' => 'admin'
 
 ], function ($router) {
-    Route::get('demo', 'Api\Auth\AdminController@demo');
-    Route::get('logout', 'Api\Auth\AdminController@logout');
+    Route::get('demo', 'Api\Auth\AdminLoginController@demo');
+    Route::get('logout', 'Api\Auth\AdminLoginController@logout');
     // Route::post('refresh', 'AdminController@refresh');
 
 });
@@ -42,8 +42,8 @@ Route::group([
     'prefix' => 'teacher'
 
 ], function ($router) {
-    Route::get('demo', 'Api\Auth\TeacherController@demo');
-    Route::get('logout', 'Api\Auth\TeacherController@logout');
+    Route::get('demo', 'Api\Auth\TeacherLoginController@demo');
+    Route::get('logout', 'Api\Auth\TeacherLoginController@logout');
     // Route::post('refresh', 'AdminController@refresh');
 
 });
@@ -54,8 +54,8 @@ Route::group([
     'prefix' => 'user'
 
 ], function ($router) {
-    Route::get('demo', 'Api\Auth\UserController@demo');
-    Route::get('logout', 'Api\Auth\UserController@logout');
+    Route::get('demo', 'Api\Auth\UserLoginController@demo');
+    Route::get('logout', 'Api\Auth\UserLoginController@logout');
     // Route::post('refresh', 'AdminController@refresh');
 
 });
