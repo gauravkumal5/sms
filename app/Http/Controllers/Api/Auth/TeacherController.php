@@ -12,7 +12,7 @@ class TeacherController extends Controller
         auth()->setDefaultDriver('teacher');
     }
     public function demo(){
-        return "demo";
+        return " Teacher demo";
     }
     public function login(Request $request){
 

@@ -12,7 +12,7 @@ class AdminController extends Controller
         auth()->setDefaultDriver('admin');
     }
     public function demo(){
-        return "demo";
+        return "admin demo";
     }
     public function login(Request $request){
 

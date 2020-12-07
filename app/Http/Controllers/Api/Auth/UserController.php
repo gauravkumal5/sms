@@ -12,7 +12,7 @@ class UserController extends Controller
         auth()->setDefaultDriver('user');
     }
     public function demo(){
-        return "demo";
+        return " user demo";
     }
     public function login(Request $request){
 
