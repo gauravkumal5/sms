@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\Auth;
 use Illuminate\Http\Request;
 use JWTAuth;
 
-
+// Here user is student
 class UserLoginController extends Controller
 {
     public function __construct(){

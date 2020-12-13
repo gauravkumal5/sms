@@ -17,8 +17,11 @@ class CreateTeachersTable extends Migration
             $table->bigIncrements('id');
             $table->string('name');
             $table->string('email')->unique();
-            $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->string('gender');
+            $table->date('dob');
+            $table->string('address');
+            $table->string('contact');
             $table->rememberToken();
             $table->timestamps();
         });

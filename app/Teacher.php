@@ -16,9 +16,11 @@ class Teacher extends Authenticatable  implements JWTSubject
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    // protected $fillable = [
+    //     'name', 'email', 'password',
+    // ];
+
+    protected $fillable=['name','email','password','gender','dob','address','contact'];
 
     /**
      * The attributes that should be hidden for arrays.
