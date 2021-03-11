@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Api\ApiControllers;
 use Illuminate\Http\Request;
 use App\Http\Resources\User as UserResource;
 use App\User;
+use App\Exports\UserExport;
+use Maatwebsite\Excel\Facades\Excel;
 class UserDetailController extends Controller
 {
 
@@ -47,6 +49,11 @@ class UserDetailController extends Controller
         }
         
     }
+
+    public function exportStudent() 
+{
+    return Excel::download(new UserExport, 'users.csv');
+}
 
     public function show($id)
     {

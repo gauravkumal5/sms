@@ -24,6 +24,9 @@ Route::post('user/login','Api\Auth\UserLoginController@login');
 
 
 
+// Route::get('admin/exportStudent', 'Api\ApiControllers\UserDetailController@exportStudent');
+
+
 Route::group([
 
     'middleware' => ['auth:admin'] ,
@@ -35,6 +38,8 @@ Route::group([
     // Route::post('refresh', 'AdminController@refresh');
 
     Route::post('addStudent', 'Api\ApiControllers\UserDetailController@store');
+
+    Route::get('exportStudent', 'Api\ApiControllers\UserDetailController@exportStudent');
 
     Route::post('addTeacher', 'Api\ApiControllers\TeacherDetailController@store');
 
@@ -69,7 +74,7 @@ Route::group([
 
 Route::group([
 
-    'middleware' => 'jwt.auth' ,
+    'middleware' => 'auth:admin,teacher' ,
 
 ], function ($router) {
 
