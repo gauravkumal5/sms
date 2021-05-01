@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use Illuminate\Http\Request;
 use JWTAuth;
+use App\Admin;
 
 
 class AdminLoginController extends Controller
@@ -15,13 +16,11 @@ class AdminLoginController extends Controller
         return "admin demo";
     }
     public function login(Request $request){
-
-        $creds = $request->only(['email','password']);
+        $creds = $request->only(['username','password']);
         if (! $token = JWTAuth::attempt($creds)) {
 
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-
         return $this->respondWithToken($token);
 
 }
@@ -42,8 +41,10 @@ public function logout()
      */
     protected function respondWithToken($token)
     {
+        $user=auth()->user()->id;
         return response()->json([
             'access_token' => $token,
+            'user'=>$user,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);

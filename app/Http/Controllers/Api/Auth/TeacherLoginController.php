@@ -16,7 +16,7 @@ class TeacherLoginController extends Controller
     }
     public function login(Request $request){
 
-        $creds = $request->only(['email','password']);
+        $creds = $request->only(['username','password']);
         if (! $token = JWTAuth::attempt($creds)) {
 
             return response()->json(['error' => 'Unauthorized'], 401);
@@ -42,8 +42,10 @@ public function logout()
      */
     protected function respondWithToken($token)
     {
+        $user=auth()->user()->id;
         return response()->json([
             'access_token' => $token,
+            'user'=>$user,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60
         ]);

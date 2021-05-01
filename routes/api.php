@@ -12,21 +12,12 @@ use Illuminate\Http\Request;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-
-// Route::middleware('auth:api')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
-
+//Login
 Route::post('admin/login','Api\Auth\AdminLoginController@login');;
 Route::post('teacher/login','Api\Auth\TeacherLoginController@login');
 Route::post('user/login','Api\Auth\UserLoginController@login');
 
-
-
-// Route::get('admin/exportStudent', 'Api\ApiControllers\UserDetailController@exportStudent');
-
-
+//Admin
 Route::group([
 
     'middleware' => ['auth:admin'] ,
@@ -34,18 +25,46 @@ Route::group([
 
 ], function ($router) {
     Route::get('demo', 'Api\Auth\AdminLoginController@demo');
+
+    //Admin Details
     Route::get('logout', 'Api\Auth\AdminLoginController@logout');
-    // Route::post('refresh', 'AdminController@refresh');
+    Route::get('getAdmin/{id}', 'Api\ApiControllers\AdminDetailsController@getOne');
+    Route::put('/updateAdmin/{id}', 'Api\ApiControllers\AdminDetailsController@update');
 
-    Route::post('addStudent', 'Api\ApiControllers\UserDetailController@store');
+    //Student Management
+    Route::post('/addStudent', 'Api\ApiControllers\UserDetailController@store');
+    Route::get('/getStudent/{id}', 'Api\ApiControllers\UserDetailController@getOne');
+    Route::put('/updateStudent/{id}', 'Api\ApiControllers\UserDetailController@update');
+    Route::delete('/deleteStudent/{id}', 'Api\ApiControllers\UserDetailController@destroy');
+    
+    Route::get('/importStudent', 'Api\ApiControllers\UserDetailController@importStudent');
+    Route::get('/exportStudent', 'Api\ApiControllers\UserDetailController@exportStudent');
+    
+    //Teacher Management
+    Route::post('/addTeacher', 'Api\ApiControllers\TeacherDetailController@store');
+    Route::get('/getTeacher/{id}', 'Api\ApiControllers\TeacherDetailController@getOne');
+    Route::put('/updateTeacher/{id}', 'Api\ApiControllers\TeacherDetailController@updateTeacher');
+    Route::delete('/deleteTeacher/{id}', 'Api\ApiControllers\TeacherDetailController@deleteTeacher');
+    
+    //Subjects
+    Route::get('/getSubjects', 'Api\ApiControllers\TeacherDetailController@allSubj');
+    Route::post('/addSubject', 'Api\ApiControllers\TeacherDetailController@storeSubject');
+    Route::delete('/deleteSubject/{id}', 'Api\ApiControllers\TeacherDetailController@deleteSubj');
 
-    Route::get('exportStudent', 'Api\ApiControllers\UserDetailController@exportStudent');
+    //classTeacher
+    Route::post('/addClassTeacher', 'Api\ApiControllers\TeacherDetailController@storeClassTeacher');
+    Route::get('/getClassTeacher', 'Api\ApiControllers\TeacherDetailController@getClassTeacher');
+    Route::delete('/deleteClassTeacher/{id}', 'Api\ApiControllers\TeacherDetailController@deleteClassTeacher');
 
-    Route::post('addTeacher', 'Api\ApiControllers\TeacherDetailController@store');
 
+    //Event management
+    Route::post('addEvent', 'Api\ApiControllers\SchoolEventController@store');
+    Route::get('getEvent/{id}', 'Api\ApiControllers\SchoolEventController@getOne');
+    Route::put('updateEvent/{id}', 'Api\ApiControllers\SchoolEventController@update');
+    Route::delete('deleteEvent/{id}', 'Api\ApiControllers\SchoolEventController@destroy');
 
-
-
+    
+   
 });
 
 Route::group([
@@ -58,6 +77,9 @@ Route::group([
     Route::get('logout', 'Api\Auth\TeacherLoginController@logout');
     // Route::post('refresh', 'AdminController@refresh');
 
+    // Route::post('/addReport', 'Api\ApiControllers\ReportController@addReport');
+
+
 });
 
 Route::group([
@@ -69,16 +91,51 @@ Route::group([
     Route::get('demo', 'Api\Auth\UserLoginController@demo');
     Route::get('logout', 'Api\Auth\UserLoginController@logout');
     // Route::post('refresh', 'AdminController@refresh');
+    Route::post('participate', 'Api\ApiControllers\EventInteractorsController@store');
+
+
+    
 
 });
 
 Route::group([
-
     'middleware' => 'auth:admin,teacher' ,
-
 ], function ($router) {
-
-    Route::get('studentList', 'Api\ApiControllers\UserDetailController@index');
+    // Route::get('studentList', 'Api\ApiControllers\UserDetailController@index');
     Route::get('teacherList', 'Api\ApiControllers\TeacherDetailController@index');
 
 });
+
+Route::group([
+    'middleware' => 'auth:admin,teacher,user' ,
+], function ($router) {
+    Route::get('getEvents', 'Api\ApiControllers\SchoolEventController@index');
+    Route::get('getPast', 'Api\ApiControllers\SchoolEventController@getPast');
+    Route::get('getRecent', 'Api\ApiControllers\SchoolEventController@getRecent');
+    Route::get('getOngoing', 'Api\ApiControllers\SchoolEventController@getOngoing');
+    Route::get('getUpcoming', 'Api\ApiControllers\SchoolEventController@getUpcoming');
+    Route::get('ongoingFuture', 'Api\ApiControllers\SchoolEventController@ongoingFuture');
+    Route::get('interactors', 'Api\ApiControllers\EventInteractorsController@index');
+
+});
+Route::post('/addReport', 'Api\ApiControllers\ReportController@addReport');
+Route::get('/getLatestReport/{id}', 'Api\ApiControllers\ReportController@getLatestReport');
+Route::get('/getReport/{id}', 'Api\ApiControllers\ReportController@getReport');
+Route::get('/getReports/{id}', 'Api\ApiControllers\ReportController@getReports');
+
+
+// Route::get('/getLatestReport/{id}', 'Api\ApiControllers\ReportController@getLatestReport');
+Route::get('/getReportAll', 'Api\ApiControllers\ReportController@getReportAll');
+
+Route::put('/updateReport/{id}', 'Api\ApiControllers\ReportController@update');
+
+
+Route::get('/getTeacherStudent/{id}', 'Api\ApiControllers\ReportController@getTeacherStudent');
+
+Route::get('/getLatestReports/{id}', 'Api\ApiControllers\ReportController@getLatestReports');
+
+Route::get('/getPastReports/{id}', 'Api\ApiControllers\ReportController@getPastReports');
+
+
+Route::get('studentList', 'Api\ApiControllers\UserDetailController@index');
+Route::get('getStudentsByClass/{id}', 'Api\ApiControllers\UserDetailController@getStudentsByClass');
