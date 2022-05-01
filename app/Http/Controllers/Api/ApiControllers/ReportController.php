@@ -51,7 +51,7 @@ class ReportController extends Controller
        }
         catch(Exception $e){
             return response()->json([
-                'data'=>'Failed to store'
+                'data'=>'Failed'
             ]);
         }
     }
@@ -172,7 +172,7 @@ class ReportController extends Controller
             foreach($reports['marks']  as $report){
                 $marks = new Marks();
                 $marks->report_details_id=$id;
-                // $marks->terminal=$request['terminal'];
+                $marks->terminal=$request['term'];
                 $marks->subject_name=$report['subject_name'];
                 $marks->theory_full=$report['theory_full'];
                 $marks->prac_full=$report['prac_full'];
@@ -183,7 +183,7 @@ class ReportController extends Controller
            
     
               return response()->json([
-                        'data'=>'report updated'
+                        'data'=>'updated'
                     ]);
            }
             catch(Exception $e){
@@ -192,7 +192,15 @@ class ReportController extends Controller
                 ]);
             }
         }
-
+        public function deleteReport($id)
+        {
+            //
+            $details=  ReportDetails::findOrFail($id);
+            $details->delete();
+            return response()->json([
+                'data'=>'Report data deleted'
+            ]);
+        }
       
 
 }//ending of class
